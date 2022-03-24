@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 class MyStr {
     #s = '';
     constructor(s) {
