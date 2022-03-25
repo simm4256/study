@@ -1,9 +1,12 @@
 import './App.css';
 import { useState } from 'react';
+import { DateToText } from './Functions';
+import { PostClick, HeartClick, inputButtonClick } from './Events';
+import { Post, Content, Input } from './Components'
 
 
 function App() {
-  let [title, titleChanger] = useState([`블로그이름`, `스`, `보`]);
+  let [blogTitle, titleChanger] = useState([`블로그이름`, `스`, `보`]);
   let [posts, postsChanger] = useState([
     {
       index: 0,
@@ -30,102 +33,72 @@ function App() {
       ,,싯,십,바ㅣㄹ,
       ,시발럼아`
     }]);
-  let [postVisible, postVisibleChanger] = useState([true, true, true]);
+  let [postsVisible, postVisibleChanger] = useState([true, true, true]);
   let [contentsVisible, contentsVisibleChanger] = useState([false, false, false]);
   let [heart, heartChanger] = useState([false, false, false]);
+  let [time, timeChanger] = useState(new Date());
+
+  let [inputVisible, inputVisibleChanger] = useState(false);
+  let [inputTitle, inputTitleChanger] = useState('');
+  let [inputContent, inputContentChanger] = useState('');
+
+  let [inputButtonVisible, inputButtonVisibleChanger] = useState(true);
 
   return (
     <div className="App">
       <div className="black-nav">
-        <div id="1">
-          <a href='localhost:3000' className='no-reaction'>{title[0]}</a>
+        <div className='title'>
+          <a href='localhost:3000' className='no-reaction'>{blogTitle[0]}</a>
         </div>
+        <div className='timer'>{DateToText(time, 0, 5)}</div>
       </div>
-      {posts.map((obj) => {
+      {posts.map((obj, i) => {
         return (<>
-          {postVisible[obj.index] ? <Post className='post' post={obj} postNumber={obj.index} ></Post> : null}
-          {contentsVisible[obj.index] ? <Content className='content' post={obj}></Content> : null
+          {postsVisible[i] ? <Post i={i} post={obj} postNumber={i}
+            states={{
+              heart: heart,
+              heartChanger: heartChanger,
+              contentsVisible: contentsVisible,
+              contentsVisibleChanger: contentsVisibleChanger
+            }} ></Post> : null}
+          {contentsVisible[i] ? <Content i={i} post={obj}></Content> : null
           }
         </>)
       })}
+      {inputVisible ?
+        <Input
+          states={{
+            inputTitle: inputTitle,
+            inputTitleChanger: inputTitleChanger,
+            inputContent: inputContent,
+            inputContentChanger: inputContentChanger
+          }}></Input> : null}
+
+      {inputButtonVisible ?
+        <div className='inputButton'>
+          <img src='images/pencil.png'
+            onClick={() => {
+              inputButtonClick(
+                {
+                  inputVisible: inputVisible,
+                  inputVisibleChanger: inputVisibleChanger,
+                  inputButtonVisible: inputButtonVisible,
+                  inputButtonVisibleChanger: inputButtonVisibleChanger,
+                  inputTitle: inputTitle,
+                  inputContent: inputContent,
+                  posts: posts,
+                  postsChanger: postsChanger,
+                  postsVisible: postsVisible,
+                  postVisibleChanger: postVisibleChanger,
+                  contentsVisible: contentsVisible,
+                  contentsVisibleChanger: contentsVisibleChanger,
+                })
+            }} />
+        </div>
+        : null}
+
     </div >
   );
-
-  // Components =========================
-
-  function Post(props) {
-    return (
-      <div className={props.className} >
-        <div className='heart'>
-          <img src={(`images/heart${heart[props.post.index] ? 'Fill' : 'Empty'}.png`)} onClick={() => { HeartClick(props.post.index) }}></img>
-        </div>
-        <div className='title' onClick={function () { PostClick(props.postNumber) }}>
-          <h3>{props.post.title}  </h3>
-          <p>{DateToText(props.post.date, 0, 2)} 발행</p>
-        </div>
-        <hr />
-      </div>
-    );
-  }
-
-  function Content(props) {
-    return (
-      <div className={props.className}>
-        <h2>{props.post.title}</h2>
-        <p>{DateToText(props.post.date, 1, 4)}</p>
-        <hr />
-        <div>
-          {props.post.content}
-        </div>
-        <br />
-      </div>
-    )
-  }
-
-  // Events ============================
-
-  function PostClick(num) {
-    let tmp = [...postVisible];
-    /* for (let i = 0; i < 3; i++) {
-      if (i === num) continue;
-      tmp[i] = !tmp[i];
-    }
-    postVisibleChanger(tmp); */
-
-    tmp = [...contentsVisible];
-    tmp[num] = !tmp[num];
-    contentsVisibleChanger(tmp);
-  }
-
-  function HeartClick(num) {
-    let tmp = [...heart];
-    console.log(tmp);
-    tmp[num] = !tmp[num];
-    console.log(tmp);
-    heartChanger(tmp);
-  }
-}
-
-
-
-
-
-// etc functions =======================
-
-function DateToText(date, s, e) {
-  let timeArray = [];
-  timeArray.push(date.getFullYear());
-  timeArray.push(date.getMonth() + 1);
-  timeArray.push(date.getDate());
-  timeArray.push(date.getHours());
-  timeArray.push(date.getMinutes());
-
-  let unit = ['년', '월', '일', '시', '분'];
-
-  let res = [];
-  for (let i = s; i <= e; i++)
-    res.push(String(timeArray[i]) + unit[i]);
-  return res.join(' ');
 }
 
 export default App;
