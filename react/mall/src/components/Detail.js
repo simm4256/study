@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import './Detail.scss'
@@ -7,25 +8,24 @@ let style = styled.div`
     padding : 20px;
 `;
 
-function Detail(props) {
-
+function Detail() {
+    let stocks = useSelector((state) => (state.stocksReducer));
+    let shoes = useSelector((state) => (state.shoesReducer))
+    let dispatch = useDispatch();
     let history = useHistory();
     let { id } = useParams();
-    let shoe = props.shoes.find((val) => {
-        return val.id === Number(id);
-    })
+    let shoe = shoes.find((val) => val.id === Number(id));
 
     let [alertVisible, alertVisibleChanger] = useState(true);
-    let [input, inputChanger] = useState('');
 
     useEffect(() => {
         let timer = setTimeout(() => {
             alertVisibleChanger(false);
-        }, 2000);
+        }, 5000);
         return () => {
             clearTimeout(timer);
         }
-    }, [alert]);
+    }, []);
 
     return (
         <div className="container">
@@ -36,7 +36,6 @@ function Detail(props) {
                     </div>
                     : null
                 }
-                <input type="text" onChange={(e) => { inputChanger(e.target.value) }} />
                 <div className="col-md-6">
                     <img src={`https://codingapple1.github.io/shop/shoes${Number(id) + 1}.jpg`} width="100%" />
                 </div>
@@ -44,15 +43,17 @@ function Detail(props) {
                     <h4 className="pt-5">{shoe.title}</h4>
                     <p>{shoe.content}</p>
                     <p>{shoe.price}</p>
-                    <StockInfo stocks={props.stocks}></StockInfo>
+                    <StockInfo stocks={stocks}></StockInfo>
                     <button className="btn btn-danger" onClick={() => {
-                        let tmp = [...props.stocks];
+                        let tmp = [...stocks];
                         tmp[0]--;
-                        props.stocksChanger(tmp);
+                        dispatch({ type: 'stocks:update to newData', newData: tmp });
                     }}>주문하기</button>
                     <button className="btn btn-danger" onClick={() => history.goBack()}>뒤로가기</button>
                 </div>
             </div>
+
+
         </div>
     )
 }

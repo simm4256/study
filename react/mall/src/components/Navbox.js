@@ -20,6 +20,9 @@ function Navbox() {
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
+                <Navbar.Brand href="/cart" className="justify-content-end" style={{ 'maxWidth': '35px' }}>
+                    <img src="images/shopping-cart.png" alt="" />
+                </Navbar.Brand>
             </Container>
         </Navbar>
 
@@ -27,3 +30,5 @@ function Navbox() {
 };
 
 export default Navbox;
+
+//http://localhost:3000/images/shopping-cart.png

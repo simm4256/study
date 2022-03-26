@@ -1,0 +1,2 @@
+@-webkit-keyframes blink-effect{50%{opacity:50%}}@keyframes blink-effect{50%{opacity:50%}}.alert{-webkit-animation:blink-effect 1s step-end infinite;animation:blink-effect 1s step-end infinite;background:pink;border-radius:5;margin:2vh auto auto;max-width:500px;padding:20px;width:100%}.alert p{margin:0}
+/*# sourceMappingURL=336.95265528.chunk.css.map*/

@@ -1,11 +1,18 @@
+@keyframes blink-effect{
+    50% {
+        opacity: 50%;
+    }
+}
+
 .alert{
-    background: #eeeeee;
+    background: pink;
     width: 100%;
-    min-width: 500px;
+    max-width: 500px;
     margin: auto;
     margin-top: 2vh;
     padding: 20px;
     border-radius: 5;
+    animation: blink-effect 1s step-end infinite;
     p{
         margin: 0;
     }

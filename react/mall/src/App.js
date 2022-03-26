@@ -1,31 +1,42 @@
 import logo from './logo.svg';
 import './App.css';
 import data from './data';
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import Navbox from './components/Navbox';
-import Jumbobox from './components/Jumbobox';
-import Product from './components/Product';
-import Detail from './components/Detail';
 import axios from 'axios';
+import { connect, useDispatch, useSelector } from 'react-redux';
+
+const Navbox = lazy(() => import('./components/Navbox'));
+const Jumbobox = lazy(() => import('./components/Jumbobox'));
+const Product = lazy(() => import('./components/Product'));
+const Detail = lazy(() => import('./components/Detail'));
+const Cart = lazy(() => import('./components/Cart'));
 
 function App() {
-  let [shoes, shoesChanger] = useState(data);
+
+  let shoes = useSelector((state) => (state.shoesReducer));
+  let dispatch = useDispatch();
+
   let [loadingVisible, loadingVisibleChanger] = useState(false);
-  let [stocks, stocksChanger] = useState([10, 11, 12]);
 
   return (
     <div className='App'>
-      <Navbox></Navbox>
+      <Suspense fallback={<div>loading...</div>}>
+        <Navbox></Navbox>
+      </Suspense>
 
       <Switch>
         <Route exact path='/'>
-          <Jumbobox></Jumbobox>
+          <Suspense fallback={<div>loading...</div>}>
+            <Jumbobox></Jumbobox>
+          </Suspense>
           <div className="row">
             {shoes.map((shoe, i) => {
               return (
-                <Product shoe={shoe} i={i} key={i}></Product>
+                <Suspense fallback={<div>loading...</div>}>
+                  <Product shoe={shoe} i={i} key={i}></Product>
+                </Suspense>
               )
             })}
           </div>
@@ -36,19 +47,28 @@ function App() {
             setTimeout(() => {
               axios.get('https://codingapple1.github.io/shop/data2.json').then((data) => {
                 let tmp = [...shoes, ...data.data];
-                shoesChanger(tmp);
+                dispatch({ type: 'shoes:update to newData', newData: tmp });
                 loadingVisibleChanger(false);
+                console.log(tmp);
+                console.log(shoes);
               }).catch((e) => {
                 console.log(e);
               });
-              console.log(shoes);
-            }, 1000);
+            }, 500);
 
           }}>더보기</Button>
         </Route>
 
         <Route path='/detail/:id'>
-          <Detail shoes={shoes} stocks={stocks} stocksChanger={stocksChanger}></Detail>
+          <Suspense fallback={<div>loading...</div>}>
+            <Detail></Detail>
+          </Suspense>
+        </Route>
+
+        <Route path='/cart'>
+          <Suspense fallback={<div>loading...</div>}>
+            <Cart></Cart>
+          </Suspense>
         </Route>
       </Switch>
 
