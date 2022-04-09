@@ -1,15 +1,15 @@
-let a: [number, string];
-a = [1, 'a'];
+var myname = 'kim';
 
-enum x {
-    main = 'main',
-    game = 'game',
-};
-let y = {
-    main: 'main',
-    game: 'game',
+const a = {
+    myname: 'sim',
 }
 
-let str = 'main';
+function f() {
+    console.log(this.myname);
+}
+let af = () => console.log(this.myname);
 
-console.log(y[str]);
+f();
+f.call(a);
+af();
+af.call(a);

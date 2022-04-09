@@ -377,3 +377,24 @@ class MyClass {
 
 # 기타
 
+### this
+* 일반 함수의 this는 해당 함수를 호출하는 시점에서 동적으로 결정. call apply bind를 이용해 this 변경 가능
+* 화살표 함수의 this는 상위 스코프의 this를 가리키며 정적임. call apply bind를 사용해도 this 변경 <strong>불가능</strong>
+* ex
+  ```typescript
+  var myname = 'kim';
+
+  const a = {
+      myname: 'sim',
+  }
+
+  function f() {
+      console.log(this.myname);
+  }
+  let af = () => console.log(this.myname);
+
+  f(); //kim
+  f.call(a); //sim
+  af(); //kim
+  af.call(a); //kim (화살표 함수는 this 할당 불가능)
+  ```
