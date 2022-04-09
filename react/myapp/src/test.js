@@ -1,8 +1,14 @@
-let x = new Date('2022-3-25');
+function a() {
+    this.num1 = 1;
+    function b() {
+        this.num2 = 2;
+        console.log(this);
+        console.log(this.num1);
+        console.log(this.num2);
+    }
+    return b;
+}
 
-console.log(`${x.getFullYear()}년 ${x.getMonth() + 1}월 ${x.getDate()}일`);
 
-console.log(x.getSeconds());
-console.log(x % 60);
-console.log(x.getTime() / 1000);
-console.log(Math.floor(x.getTime() / 1000) / 60);
+let x = a();
+x();

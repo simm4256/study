@@ -1,12 +1,7 @@
-button1.addEventListener('click', (e) => {
-    alert(1);
-});
-button1.addEventListener('click', (e) => {
-    alert(2);
-})
-button1.addEventListener('mouseover', (e) => {
-    e.target.style.backgroundColor = "yellow";
-})
-button1.addEventListener('mouseleave', (e) => {
-    e.target.style.backgroundColor = 'white';
+let circle = document.getElementById('circle');
+const [defaultX, defaultY] = [circle.getBoundingClientRect().left, circle.getBoundingClientRect().top];
+const [width, height] = [circle.getBoundingClientRect().width, circle.getBoundingClientRect().height];
+box.addEventListener('click', (e) => {
+    const [x, y] = [circle.getBoundingClientRect().left, circle.getBoundingClientRect().top];
+    circle.style.transform = `translate(${e.clientX - defaultX - width / 2}px, ${e.clientY - defaultY - height / 2}px)`;
 })
