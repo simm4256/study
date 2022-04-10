@@ -1,13 +1,9 @@
-var _this = this;
-var myname = 'kim';
-var a = {
-    myname: 'sim',
-};
-function f() {
-    console.log(this.myname);
+function sum(a, b) {
+    if (typeof a === 'string')
+        a = Number(a);
+    if (typeof b === 'string')
+        b = Number(b);
+    return a + b;
 }
-var af = function () { return console.log(_this.myname); };
-f();
-f.call(a);
-af();
-af.call(a);
+console.log(sum(1, '2'));
+console.log(sum('-12', 13));

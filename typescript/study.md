@@ -28,3 +28,21 @@
 * `?` 태그를 매개변수 뒤에 붙일 수 있음. 단, 이 경우 해당 매개변수는 마지막에 와야 함
 * 함수의 반환형을 정할 수 있음. `function f():number{}` 와 같은 형태로 사용
 * 매개변수로 나머지 매개변수(`...`) 사용 가능
+* `overloading` : 매개변수의 타입이 다를 때 같은 이름으로 선언 가능
+  * ex
+  ```typescript
+    function sum(a: number, b: number): number;
+    function sum(a: number, b: string): number;
+    function sum(a: string, b: number): number;
+    function sum(a: string, b: string): number;
+    function sum(a: number | string, b: number | string): number {
+        if (typeof a === 'string')
+            a = Number(a);
+        if (typeof b === 'string')
+            b = Number(b);
+        return a + b;
+    }
+
+    console.log(sum(1, '2'));
+    console.log(sum('-12', 13));
+  ```
