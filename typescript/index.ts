@@ -1,14 +1,14 @@
-function sum(a: number, b: number): number;
-function sum(a: number, b: string): number;
-function sum(a: string, b: number): number;
-function sum(a: string, b: string): number;
-function sum(a: number | string, b: number | string): number {
-    if (typeof a === 'string')
-        a = Number(a);
-    if (typeof b === 'string')
-        b = Number(b);
-    return a + b;
-}
+const btn = document.getElementById('btn');
+const num = document.getElementById('num');
 
-console.log(sum(1, '2'));
-console.log(sum('-12', 13));
+const increase = (function (): Function {
+    let count = 0;
+    return function (): Number {
+        return ++count;
+    }
+})();
+
+btn.addEventListener('click', () => {
+    //increase는 생성된 순간 내부함수만을 기억하지만, 외부함수의 count를 기억하고 있음
+    num.innerHTML = increase();
+})

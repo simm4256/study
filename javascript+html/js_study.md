@@ -232,20 +232,6 @@ import _ from lodash
   * 인자의 앞에 2개는 arg1, arg2에 할당되고 나머지 인자가 있을 경우 restArgs에 할당
   * 나머지 매개변수는 <u>'배열'</u>이기 때문에 forEach, map 등 사용 가능
 
-### 클로저(closure) 
-* 함수가 생성될 당시의 외부 변수를 기억, 생성된 이후 계속 접근 가능
-  * ex
-    ```javascript
-    function sum(x){
-        return function(y){
-            return x+y;
-        }
-    }
-    const a = sum(3);
-    console.log(a(2)); //5출력. a는 sum에서 반환한 '함수'고, 이 a는 자신의 상위함수 sum의 x값을 저장하고 있기에 언제든 x에 접근 가능
-    ```
-  * 이는 function으로 은닉화하는 테크닉에 사용
-
 ### call, apply, bind
 * `fn.call(x, arg1, arg2, ...)` : fn에서 this로 x에 접근 가능
 * `fn.apply(x, [arg1, arg2, ...])` : call과 똑같지만 매개변수를 배열로 받아서 하나씩 넘김
@@ -401,56 +387,21 @@ class MyClass {
 
 ### closure
 * 함수가 실행될 때 렉시컬 환경과 함수의 조합
-* 주로 현 상태를 변경하는 방식으로 사용
+* 주로 현 상태를 기억하고 상태를 변경할 때 사용
 * ex
-  ```html
-  <!DOCTYPE html>
-  <html>
-  <body>
-    <button class="toggle">toggle</button>
-    <div class="box" style="width: 100px; height: 100px; background: red;"></div>
+  ```typescript
+  const btn = document.getElementById('btn');
+  const num = document.getElementById('num');
 
-    <script>
-      var box = document.querySelector('.box');
-      var toggleBtn = document.querySelector('.toggle');
+  const increase = (function (): Function {
+      let count = 0;
+      return function (): Number {
+          return ++count;
+      }
+  })();
 
-      var toggle = (function () {
-        var isShow = false;
-
-        // ① 클로저를 반환
-        return function () {
-          box.style.display = isShow ? 'block' : 'none';
-          // ③ 상태 변경
-          isShow = !isShow;
-        };
-      })();
-
-      // ② 이벤트 프로퍼티에 클로저를 할당
-      toggleBtn.onclick = toggle;
-    </script>
-  </body>
-  </html>
+  btn.addEventListener('click', () => {
+      //increase는 생성된 순간 내부함수만을 기억하지만, 외부함수의 count를 기억하고 있음
+      num.innerHTML = increase();
+  })
   ```
-  <!DOCTYPE html>
-  <html>
-  <body>
-    <button class="toggle">toggle</button>
-    <div class="box" style="width: 100px; height: 100px; background: red;"></div>
-
-    <script>
-      var box = document.querySelector('.box');
-      var toggleBtn = document.querySelector('.toggle');
-
-      var toggle = (function () {
-        var isShow = false;
-
-        return function () {
-          box.style.display = isShow ? 'block' : 'none';
-          isShow = !isShow;
-        };
-      })();
-
-      toggleBtn.onclick = toggle;
-    </script>
-  </body>
-  </html>
