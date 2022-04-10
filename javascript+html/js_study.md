@@ -296,9 +296,37 @@ class MyClass {
 <br><br>
 # 비동기 처리
 
-비동기 처리 과정 : 대기실 -> 큐 -> 메인스택
+### 비동기 처리 과정
+1. 비동기 코드가 call stack에 담김
+2. 이벤트 루프가 call stack에서 비동기 코드를 발견, web api로 넘김
+3. web api에서 처리가 끝난 비동기 함수를 callback queue에 보냄
+4. call stack이 비어있으면 이벤트 루프가 callback queue에 있는 비동기 함수를 `우선순위`에 따라 call stack에 할당
+   * Microtask Queue(Promise.then 처리) > Animation Frames(애니메이션 처리) > Task Queue(setTimeout, setInterval 처리)
+* ex
+  ```typescript
+  setTimeout(() => {
+    console.log('timeout');
+  }, 0);
 
-### 스케줄링 함수
+  let x = new Promise((res, rej) => {
+      setTimeout(() => {
+          console.log('timeout in promise');
+          res(1);
+      }, 0);
+      console.log('promise');
+  }).then(() => {
+      console.log('then');
+  })
+
+  /* 실행결과
+      promise
+      timeout
+      timeout in promise
+      then
+  */
+  ```
+
+### Tasks
 * `setTimeout(fn, ms, arr1, arr2...)` : ms 후 fn 실행. fn의 매개변수는 ms 뒤에 오는것에 주의
 * `setInterval(fn, ms, arr1, arr2...)` : ms마다 fn 반복 실행
 * `clearTimeout(t)` : let t = setTimeout(fn, ms); //or interval 일 때 대기중인 t를 삭제
@@ -335,10 +363,10 @@ class MyClass {
 ### Promise.all
 * 여러개의 promise를 동시에 실행하여 모두 성공했을 때 then
 * ex
-  ```javascript
+  ```ts
   Promise.all([x(), y(), z()])
   .then(
-      ...
+      //...
   )
   ```
 

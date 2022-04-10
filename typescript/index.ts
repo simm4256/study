@@ -1,14 +1,13 @@
-const btn = document.getElementById('btn');
-const num = document.getElementById('num');
+setTimeout(() => {
+    console.log('timeout');
+}, 0);
 
-const increase = (function (): Function {
-    let count = 0;
-    return function (): Number {
-        return ++count;
-    }
-})();
-
-btn.addEventListener('click', () => {
-    //increase는 생성된 순간 내부함수만을 기억하지만, 외부함수의 count를 기억하고 있음
-    num.innerHTML = increase();
+let x = new Promise((res, rej) => {
+    setTimeout(() => {
+        console.log('timeout in promise');
+        res(1);
+    }, 0);
+    console.log('promise');
+}).then(() => {
+    console.log('then');
 })
