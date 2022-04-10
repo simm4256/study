@@ -1,13 +1,11 @@
-setTimeout(() => {
-    console.log('timeout');
-}, 0);
+interface User {
+    id: number;
+    pw: string;
+    name: string;
+    age: number;
+}
 
-let x = new Promise((res, rej) => {
-    setTimeout(() => {
-        console.log('timeout in promise');
-        res(1);
-    }, 0);
-    console.log('promise');
-}).then(() => {
-    console.log('then');
-})
+const admin: Pick<User, "id" & "pw"> = {
+    id: 0,
+    pw: 'asd'
+}
