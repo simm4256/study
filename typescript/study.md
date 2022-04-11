@@ -94,7 +94,7 @@
     type UserKey = keyof User; // 'name' | 'age'
     ```
 
-### 유틸리티 타입 : <a href="https://typescript-kr.github.io/pages/utility-types.html">링크</a>
+### 유틸리티 타입 : <a href="https://typescript-kr.github.io/pages/utility-types.html">링크</a>에 아래 외에도 여러 유틸리티 타입이 있음
 * Partital<T> : T의 key들에 ?를 붙여주는 효과를 가짐
     ex
     ```ts
@@ -135,7 +135,6 @@
     ```
 * Omit<T, K> : T 내에서 K들을 제외한 나머지
 * Exclude<T1, T2> : T1에서 T2를 제외한 나머지. Omit과의 차이점은 T2에 타입을 사용
-* NonNullable<T> : T 내에서 null을 제외한 나머지
 
 <br><br>
 # Class
