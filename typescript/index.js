@@ -1,15 +1,15 @@
-const tree = document.getElementById('tree');
-for (let li of tree.querySelectorAll('li')) {
-    let span = document.createElement('span');
-    li.prepend(span);
-    span.append(span.nextSibling); // move the text node into span
-}
-tree.onclick = (e => {
-    const target = e.target;
-    if (target.tagName == 'LI') {
-        const child = target.getElementsByTagName('ul')[0];
-        if (!child)
-            return;
-        child.hidden = !child.hidden;
+var _this = this;
+var myname = 'Sim';
+var user = {
+    myname: "John",
+    age: 30,
+    sayHi: function () {
+        // 'this'는 '현재 객체'를 나타냅니다.
+        console.log(this.myname);
+    },
+    af: function () {
+        console.log(_this.myname);
     }
-});
+};
+user.sayHi(); // John
+user.af();
