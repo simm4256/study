@@ -1,5 +1,7 @@
-#meter {
-    width: 301px;
-    height: 60px;
+.tree span:hover {
+    font-weight: bold;
+}
+
+.tree span {
     cursor: pointer;
 }
