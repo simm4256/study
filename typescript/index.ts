@@ -1,18 +1,12 @@
-var myname = 'Sim';
-let user = {
-    myname: "John",
-    age: 30,
+let a = {
+    name: 'sim',
+    age: 21,
+}
 
-    sayHi() {
-        // 'this'는 '현재 객체'를 나타냅니다.
-        console.log(this.myname);
-    },
+let b = {
+    sex: 'male',
+}
 
-    af: () => {
-        console.log(this.myname);
-    }
+Object.setPrototypeOf(b, a);
 
-};
-
-user.sayHi(); // John
-user.af();
+console.log(b.name);
