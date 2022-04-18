@@ -8,5 +8,6 @@ let b = {
 }
 
 Object.setPrototypeOf(b, a);
-
-console.log(b.name);
+Object.getPrototypeOf(b).id = 'asd';
+console.log(Object.getPrototypeOf(b).id);
+console.log(a.id);
