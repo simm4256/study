@@ -29,6 +29,11 @@
   * OUTER
     <img src=https://hongong.hanbit.co.kr/wp-content/uploads/2021/11/OUTER-JOIN_%EB%8D%94%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0-600x600.png>
 ### WHERE : 행 선택 조건식
+* IN : 배열 내 값 중 일치하는 게 있으면 TRUE
+  ```SQL
+  SELECT * FROM users
+  WHERE age IN (20, 21, 22)
+  ```
 ### GROUP BY : 같은 결과값을 그룹화
 * HAVING : 그룹화한 결과에서 조건식을 사용할 때. WHERE과 달리 집계식(수학) 사용 가능
 ### ORDER BY : 정렬
@@ -74,12 +79,21 @@ with recursive 뷰명 as(
   ```SQL
   SUBSTR('우아한형제들', 2, 4) // '아한형제'
   ```
+* 컬럼명 LIKE '조건패턴' : 조건패턴에 부합하는 문자열을 가진 데이터 반환
+  * % : 여러 글자
+  * _ : 한글자
+  ```SQL
+  SELECT *
+  FROM users
+  WHERE name LIKE '_우철'
+  // X우철 이라는 이름을 가진 모든 유저 정보 반환
+  ```
 
 ### 시간 (DATETIME)
 * CURDATE() : 현재 날짜 (시간은 00:00:00)
 * CURTIME() : 현재 시간 (24시간제 표현)
 * HOUR(date) : date의 시간
-* DAY(date) : date의 날짜
+* DATE(date) : date의 날짜. SUBSTR(DATE,1,10)과 결합해 뒤에 시간 00:00:00 뗄 수 있음
 
 ### 비교
 * 숫자나 문자열의 단순 비교는 =, != 사용 가능
