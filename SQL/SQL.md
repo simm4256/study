@@ -5,6 +5,17 @@
   ```SQL
   SELECT Address AS 주소
   ```
+* CASE ~ WHEN ~ THEN ~ ELSE ~ END : 조건문
+  ```SQL
+  SELECT
+    CASE
+      WHEN Address = '1' THEN '001'
+      WHEN Address = '2' THEN '002'
+      WHEN Address is NULL THEN 'NULL'
+      ELSE '???'
+    END AS 00_Address
+  FROM users
+  ```
 ### FROM : 테이블 이름
 * JOIN : 2개의 테이블을 엮은 범위 생성
   * INNER : 교집합
@@ -74,4 +85,13 @@ with recursive 뷰명 as(
 * 숫자나 문자열의 단순 비교는 =, != 사용 가능
 * `NULL`을 비교할 떈 `is`, `is not` 을 사용해야 함
 
+### 변경
+* REPLACE('문자열' or 열, a, b) : a를 b로 바꾼 결과. (`NULL`값은 NVL 사용)
 
+### NULL
+* NVL(표현식1, 표현식2) : 표현식1의 결과가 NULL이면 표현식2로 출력
+  ```SQL
+  SELECT NVL(NULL, 'isNull')
+  FROM users
+  // isNull
+  ```
